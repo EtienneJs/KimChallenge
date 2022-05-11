@@ -32,8 +32,13 @@ const LIST_COUNTRIES = gql`
 
 
 function App() {
-  const [country, setCountry] = useState('US');
+  const [countryName, setCountryName] = useState('US');
   const {data, loading, error} = useQuery(LIST_COUNTRIES, {client});
+
+  const handleOnchange =(e) =>{
+    e.preventDefault()
+    console.log(e.target.value)
+  }
 
 
   if (loading || error) {
@@ -42,15 +47,14 @@ function App() {
 
   return (
     <div className="App">
-      <select value={country} onChange={event => setCountry(event.target.value)}>
+      {/* <select value={country} onChange={event => setCountry(event.target.value)}>
       {data.countries.map(country => (
         <option key={country.code} value={country.code}>
-          { console.log(country.languages[0].name) }
-          {(loading || error) && error ? error.message : 'loading...' }
           {country.name}
         </option>
       ))}
-    </select>
+    </select> */}
+    <input onChange={handleOnchange} type='text' />
     </div>
   );
 }
