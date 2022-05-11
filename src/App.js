@@ -33,12 +33,20 @@ const LIST_COUNTRIES = gql`
 
 function App() {
   const [countryName, setCountryName] = useState('US');
+  const [groupBy, setGroupBy] = useState('continent')
   const {data, loading, error} = useQuery(LIST_COUNTRIES, {client});
 
   const handleOnchange =(e) =>{
     e.preventDefault()
-    console.log(e.target.value)
+    setCountryName(e.target.value)
   }
+
+  const handleGroup = (e) =>{
+    e.preventDefault()
+    console.log(e.target.value)
+    setGroupBy(e.target.value)
+  }
+
 
 
   if (loading || error) {
@@ -55,6 +63,8 @@ function App() {
       ))}
     </select> */}
     <input onChange={handleOnchange} type='text' />
+    <button onClick={handleGroup} value='continent'>Continent</button>
+    <button onClick={handleGroup} value='languages'>Languages</button>
     </div>
   );
 }
