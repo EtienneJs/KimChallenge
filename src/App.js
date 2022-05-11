@@ -68,10 +68,9 @@ function App() {
     <div className="App">
      <div className='title'>
      <h1>Country Search</h1>
-      <p>Some random text</p>
      </div>
    <div className='inputs-container'>
-   <i className="fa-solid fa-magnifying-glass"></i><input onChange={handleOnchange} type='text' />
+   <i className="fa-solid fa-magnifying-glass"></i><input placeholder='Some random text' onChange={handleOnchange} type='text' />
    </div>
    <div className='btns-container'>
      <h2>Group by: </h2>
