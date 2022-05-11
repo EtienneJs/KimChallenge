@@ -36,7 +36,8 @@ const LIST_COUNTRIES = gql`
 function App() {
   const [countryName, setCountryName] = useState('');
   const [groupBy, setGroupBy] = useState('continent')
-  const [active, setActive] = useState()
+  const [activeCont, setActiveCont] = useState()
+  const [activeLeng, setActiveLeng] = useState()
   const [filterDataName, setFilterDataName] = useState('')
   const {data, loading, error} = useQuery(LIST_COUNTRIES, {client});
 
@@ -53,7 +54,14 @@ function App() {
   const handleGroup = (e) =>{
     e.preventDefault()
     setGroupBy(e.target.value)
-    active ? setActive(false) : setActive(true)
+    if(e.target.value ==='continent'){
+      setActiveCont(true)
+      setActiveLeng(false)
+    } else {
+      setActiveLeng(true)
+    setActiveCont(false)
+    }
+    
   }
   const filter =( name )=>{
     if(name === ''){
@@ -74,8 +82,8 @@ function App() {
    </div>
    <div className='btns-container'>
      <h2>Group by: </h2>
-   <button  onClick={handleGroup} className={active ? '':'btn-Active' } value='continent'>Continent</button>
-    <button onClick={handleGroup} className={active ? 'btn-Active':'' } value='languages'>Languages</button>
+   <button  onClick={handleGroup} className={activeCont && 'btn-Active'} value='continent'>Continent</button>
+    <button onClick={handleGroup} className={activeLeng && 'btn-Active'}  value='languages'>Languages</button>
    </div>
    <div className='containerAll-card'>
     {filterDataName &&
