@@ -45,6 +45,7 @@ function App() {
   if (loading || error) {
     return <p>{error ? error.message : 'Loading...'}</p>;
   }
+  //Funcion para obtener el valor del input y cambiar el estado 
   const handleOnchange =(e) =>{
     e.preventDefault()
     setCountryName(e.target.value)
@@ -54,6 +55,7 @@ function App() {
   const handleGroup = (e) =>{
     e.preventDefault()
     setGroupBy(e.target.value)
+    //Condicional para los botones
     if(e.target.value ==='continent'){
       setActiveCont(true)
       setActiveLeng(false)
