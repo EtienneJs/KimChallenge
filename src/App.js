@@ -37,6 +37,7 @@ const LIST_COUNTRIES = gql`
 function App() {
   const [countryName, setCountryName] = useState('');
   const [groupBy, setGroupBy] = useState('continent')
+  const [active, setActive] = useState()
   const [filterDataName, setFilterDataName] = useState('')
   const {data, loading, error} = useQuery(LIST_COUNTRIES, {client});
 
@@ -53,6 +54,7 @@ function App() {
   const handleGroup = (e) =>{
     e.preventDefault()
     setGroupBy(e.target.value)
+    active ? setActive(false) : setActive(true)
   }
   const filter =( name )=>{
     if(name === ''){
@@ -62,30 +64,34 @@ function App() {
     return data.countries.filter(data => data.name.toLowerCase().includes(name))
   }
 
+
   return (
     <div className="App">
-      {/* <select value={country} onChange={event => setCountry(event.target.value)}>
-      {data.countries.map(country => (
-        <option key={country.code} value={country.code}>
-          {country.name}
-        </option>
-      ))}
-    </select> */}
-    <input onChange={handleOnchange} type='text' />
-    <button onClick={handleGroup} value='continent'>Continent</button>
-    <button onClick={handleGroup} value='languages'>Languages</button>
+     <div className='title'>
+     <h1>Country Search</h1>
+      <p>Some random text</p>
+     </div>
+   <div className='inputs-container'>
+   <i className="fa-solid fa-magnifying-glass"></i><input onChange={handleOnchange} type='text' />
+   </div>
+   <div className='btns-container'>
+     <h2>Group by: </h2>
+   <button  onClick={handleGroup} className={active ? '':'btn-Active' } value='continent'>Continent</button>
+    <button onClick={handleGroup} className={active ? 'btn-Active':'' } value='languages'>Languages</button>
+   </div>
+   <div className='containerAll-card'>
     {filterDataName &&
       filterDataName.map(data => 
-        <div key={data.code}>
-          <h1>{(groupBy === 'continent') ? data.continent.name :data.languages[0].name}</h1>
+        <div className='container-card' key={data.code}>
+          <h2>{(groupBy === 'continent' ) ? data.continent.name  : (data.languages[0]) ? data.languages[0].name : 'No register' }</h2>
             <div className='card'>
               <div className='card-title'>
               <span >{(data.emoji)}</span> <p>{data.name}</p>
               </div>
               <div className='card-body'>
-                <p>{data.native}</p>
-                <p>{data.capital}</p>
-                <p>{data.currency}</p>
+                <p>Native: {data.native}</p>
+                <p>Capital:  {data.capital ? data.capital:'no register' }</p>
+                <p>Currency:  {data.currency ? data.currency : 'no register' }</p>
               </div>
 
             </div>
@@ -93,6 +99,7 @@ function App() {
         
         )
     }
+    </div>
     </div>
   );
 }
